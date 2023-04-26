@@ -11,7 +11,10 @@ return {
     ["<leader>bn"] = { "<cmd>tabnew<cr>", desc = "New tab" },
     ["<leader>bD"] = {
       function()
-        require("astronvim.utils.status").heirline.buffer_picker(function(bufnr) require("astronvim.utils.buffer").close(bufnr) end)
+        require("astronvim.utils.status").heirline.buffer_picker(function(bufnr)
+          require("astronvim.utils.buffer").close(
+            bufnr)
+        end)
       end,
       desc = "Pick to close",
     },
@@ -20,6 +23,17 @@ return {
     ["<leader>b"] = { name = "Buffers" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    ["<leader>lg"] = { "<cmd>RustHoverActions<cr>", desc = "rust hover action" },
+    ["∆"] = { ":m .+1<cr>==" },
+    ["˚"] = { ":m .-2<cr>==" },
+    ["<leader>c"] = {
+      function()
+        local bufs = vim.fn.getbufinfo { buflisted = true }
+        require("astronvim.utils.buffer").close(0)
+        if require("astronvim.utils").is_available "alpha-nvim" and not bufs[2] then require("alpha").start(true) end
+      end,
+      desc = "Close buffer",
+    },
   },
   t = {
     -- setting a mapping to false will disable it
