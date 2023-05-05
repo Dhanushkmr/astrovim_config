@@ -34,6 +34,11 @@ return {
       end,
       desc = "Close buffer",
     },
+    ["<C-u>"] = { "<C-u>zz", desc = "Move half page up" },
+    ["<C-d>"] = { "<C-d>zz", desc = "Move half page down" },
+    ["<leader>a"] = { name = "Harpoon" },
+    ["<leader>aa"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", desc = "Add file to harpoon" },
+    ["<leader>am"] = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Toggle quick menu" }
   },
   t = {
     -- setting a mapping to false will disable it
