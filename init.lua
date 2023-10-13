@@ -1,16 +1,16 @@
 return {
   -- Configure AstroNvim updates
   updater = {
-    remote = "origin", -- remote to use
-    channel = "stable", -- "stable" or "nightly"
-    version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-    branch = "nightly", -- branch name (NIGHTLY ONLY)
-    commit = nil, -- commit hash (NIGHTLY ONLY)
-    pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
-    skip_prompts = false, -- skip prompts about breaking changes
+    remote = "origin",     -- remote to use
+    channel = "stable",    -- "stable" or "nightly"
+    version = "latest",    -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
+    branch = "nightly",    -- branch name (NIGHTLY ONLY)
+    commit = nil,          -- commit hash (NIGHTLY ONLY)
+    pin_plugins = nil,     -- nil, true, false (nil will pin plugins on stable only)
+    skip_prompts = false,  -- skip prompts about breaking changes
     show_changelog = true, -- show the changelog after performing an update
-    auto_quit = false, -- automatically quit the current session after a successful update
-    remotes = { -- easily add new remotes to track
+    auto_quit = false,     -- automatically quit the current session after a successful update
+    remotes = {            -- easily add new remotes to track
       --   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
       --   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
       --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
@@ -28,7 +28,7 @@ return {
     formatting = {
       -- control auto formatting on save
       format_on_save = {
-        enabled = true, -- enable or disable format on save globally
+        enabled = true,     -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
           -- "go",
         },
@@ -46,9 +46,7 @@ return {
       -- end
     },
     -- enable servers that you already have installed without mason
-    servers = {
-      -- "pyright"
-    },
+    -- servers = { "metals" },
     setup_handlers = {
       -- add custom handler
       rust_analyzer = function(_, opts) require("rust-tools").setup { server = opts } end,
@@ -76,6 +74,58 @@ return {
     {
       "hrsh7th/nvim-cmp",
       sources = { { name = "otter" } },
+    },
+    {
+      "neovim/nvim-lspconfig",
+      config = function()
+        require("mason").setup()
+        require("mason-lspconfig").setup {
+          automatic_installation = true,
+        }
+
+        local lspconfig = require "lspconfig"
+        local cmp_nvim_lsp = require "cmp_nvim_lsp"
+        local util = require "lspconfig.util"
+        local lsp_flags = {
+          allow_incremental_sync = true,
+          debounce_text_changes = 150,
+        }
+        -- local function strsplit(s, delimiter)
+        --   local result = {}
+        --   for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
+        --     table.insert(result, match)
+        --   end
+        --   return result
+        -- end
+
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+        lspconfig.pyright.setup {
+          capabilities = capabilities,
+          flags = lsp_flags,
+          settings = {
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "openFilesOnly",
+              },
+            },
+          },
+          root_dir = function(fname)
+            return util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt")(fname)
+                or util.path.dirname(fname)
+          end,
+        }
+        -- local function get_quarto_resource_path()
+        --   local f = assert(io.popen('quarto --paths', 'r'))
+        --   local s = assert(f:read('*a'))
+        --   f:close()
+        --   return strsplit(s, '\n')[2]
+        -- end
+      end,
     },
   },
   highlights = {

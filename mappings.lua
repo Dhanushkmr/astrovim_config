@@ -8,13 +8,15 @@ return {
   n = {
     -- second key is the lefthand side of the map
     -- mappings seen under group name "Buffer"
+    ["y"] = { '"+y', noremap = true },
+    ["yy"] = { '"+yy', noremap = true },
+
     ["<leader>bn"] = { "<cmd>tabnew<cr>", desc = "New tab" },
     ["<leader>bD"] = {
       function()
-        require("astronvim.utils.status").heirline.buffer_picker(function(bufnr)
-          require("astronvim.utils.buffer").close(
-            bufnr)
-        end)
+        require("astronvim.utils.status").heirline.buffer_picker(
+          function(bufnr) require("astronvim.utils.buffer").close(bufnr) end
+        )
       end,
       desc = "Pick to close",
     },
@@ -38,10 +40,15 @@ return {
     ["<C-d>"] = { "<C-d>zz", desc = "Move half page down" },
     ["<leader>a"] = { name = "Harpoon" },
     ["<leader>aa"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", desc = "Add file to harpoon" },
-    ["<leader>am"] = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Toggle quick menu" }
+    ["<leader>am"] = { ":lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Toggle quick menu" },
+    ["<leader>i"] = { "<cmd>HFccSuggestion<cr>", desc = "Starcoder Insert" },
   },
   t = {
     -- setting a mapping to false will disable it
     -- ["<esc>"] = false,
+  },
+  v = {
+    ["jk"] = { "<esc>", noremap = true },
+    ["y"] = { '"+y', noremap = true },
   },
 }

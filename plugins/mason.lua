@@ -5,8 +5,21 @@ return {
     "williamboman/mason-lspconfig.nvim",
     -- overrides `require("mason-lspconfig").setup(...)`
     opts = {
-      ensure_installed = { "lua_ls", "pyright", "ruby_ls", "graphql", "eslint", "tailwindcss", "pyright", "dockerls",
-        "cssls", "html", "rust_analyzer", "vimls", "yamlls", "docker_compose_language_service", "jsonls" },
+      ensure_installed = {
+        "lua_ls",
+        "ruby_ls",
+        "graphql",
+        "eslint",
+        "tailwindcss",
+        "dockerls",
+        "cssls",
+        "html",
+        "rust_analyzer",
+        "vimls",
+        "yamlls",
+        "docker_compose_language_service",
+        "jsonls",
+      },
     },
   },
   -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources

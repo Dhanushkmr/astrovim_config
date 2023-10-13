@@ -11,19 +11,44 @@ return {
   { "simrat39/rust-tools.nvim" },
   { "neovim/nvim-lspconfig" },
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop" },
+  },
+  -- {
+  --   "scalameta/nvim-metals",
+  --   event = { "BufRead", "BufWritePost" },
+  --   cmd = "MetalsStartServer",
+  --   dependencies = "nvim-lua/plenary.nvim",
+  -- },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup {
+  --       suggestion = {
+  --         auto_trigger = true,
+  --         keymap = {
+  --           accept = "<D-i>",
+  --         },
+  --       },
+  --       filetypes = {
+  --         rust = false,
+  --       },
+  --     }
+  --   end,
+  -- },
+  {
+    "huggingface/hfcc.nvim",
+    cmd = "HFccSuggestion",
     config = function()
-      require("copilot").setup {
-        suggestion = {
-          auto_trigger = true,
-          keymap = {
-            accept = "<D-i>",
-          },
-        },
-        filetypes = {
-          rust = false,
+      require("hfcc").setup {
+        model = "bigcode/starcoder",
+        query_params = {
+          max_new_tokens = 200,
+          temperature = 0.2,
+          top_p = 0.95,
+          stop_token = "<|endoftext|>",
         },
       }
     end,
@@ -38,51 +63,55 @@ return {
       }
     end,
   },
-  {
-    "quarto-dev/quarto-nvim",
-    version = "0.7.3",
-    cmd = { "Quarto", "QuartoPreview" },
-    dev = false,
-    dependencies = {
-      { "hrsh7th/nvim-cmp" },
-      {
-        "jmbuhr/otter.nvim",
-        version = "0.8.1",
-        dev = false,
-        config = function()
-          require("otter.config").setup {
-            lsp = {
-              -- hover = {
-              -- border = require("misc.style").border,
-              -- },
-            },
-          }
-        end,
-      },
-    },
-    config = function()
-      require("quarto").setup {
-        debug = false,
-        closePreviewOnExit = true,
-        lspFeatures = {
-          enabled = true,
-          languages = { "python", "julia", "bash" },
-          chunks = "curly", -- 'curly' or 'all'
-          diagnostics = {
-            enabled = true,
-            triggers = { "BufWritePost" },
-          },
-          completion = {
-            enabled = true,
-          },
-        },
-        keymap = {
-          hover = "K",
-          definition = "gd",
-        },
-      }
-    end,
-  },
+  { "GCBallesteros/jupytext.vim" },
+  -- {
+  --   "quarto-dev/quarto-nvim",
+  --   cmd = "QuartoPreview",
+  --   dev = false,
+  --   dependencies = {
+  --     { "hrsh7th/nvim-cmp" },
+  --     {
+  --       "jmbuhr/otter.nvim",
+  --       dev = false,
+  --       dependencies = {
+  --         "hrsh7th/nvim-cmp",
+  --         "neovim/nvim-lspconfig",
+  --         "nvim-treesitter/nvim-treesitter",
+  --       },
+  --       -- config = function()
+  --       --   require("otter.config").setup {
+  --       --     lsp = {
+  --       --       -- hover = {
+  --       --       --   border = require("misc.style").border,
+  --       --       -- },
+  --       --     },
+  --       --   }
+  --       -- end,
+  --     },
+  --   },
+  --   config = function()
+  --     require("quarto").setup {
+  --       debug = false,
+  --       closePreviewOnExit = true,
+  --       lspFeatures = {
+  --         enabled = true,
+  --         languages = { "python", "julia", "bash" },
+  --         chunks = "curly", -- 'curly' or 'all'
+  --         diagnostics = {
+  --           enabled = true,
+  --           triggers = { "BufWritePost" },
+  --         },
+  --         completion = {
+  --           enabled = true,
+  --         },
+  --       },
+  --       keymap = {
+  --         hover = "K",
+  --         definition = "gd",
+  --       },
+  --     }
+  --   end,
+  -- },
 
   -- You can also add new plugins here as well:
   -- Add plugins, the lazy syntax
