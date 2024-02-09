@@ -25,7 +25,7 @@ return {
     ["<leader>b"] = { name = "Buffers" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
-    ["<leader>lg"] = { "<cmd>RustHoverActions<cr>", desc = "rust hover action" },
+    -- ["<leader>lg"] = { "<cmd>RustHoverActions<cr>", desc = "rust hover action" },
     ["∆"] = { ":m .+1<cr>==" },
     ["˚"] = { ":m .-2<cr>==" },
     ["<leader>c"] = {
